@@ -163,19 +163,23 @@ void CircularList<T>::remove(int index)
       else
       {
          //use local variables
-		 DoubleNode<T>* prev = find(index - 1);
-         DoubleNode<T>* curr = prev->getNext();
-         DoubleNode<T>* node = curr->getNext();  
-         prev->setNext(node);
+		 DoubleNode<T>* curr = find(index);
+         DoubleNode<T>* next = curr->getNext();
+         DoubleNode<T>* prev = curr->getPrev();  
+		 
+         prev->setNext(next);
+		 next->setPrev(prev);
+		delete curr;
+		 
+         loc = next;
+         loc_pos = index;
+       
 
-         if (node != NULL) 
+         if (index == sze) 
          {
-            node->setPrev(prev);
+            loc_pos = 1;
          }
 
-         loc = prev;
-         loc_pos = index - 1;
-         delete curr;
       }
       sze--;
    } 
